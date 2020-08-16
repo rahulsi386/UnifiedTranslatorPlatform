@@ -1,0 +1,50 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "actions": [
+    {
+      "type": "Action.ShowCard",
+      "title": "Translate Text",
+      "card": {
+        "type": "AdaptiveCard"
+      },
+      "style": "positive"
+    },
+    {
+      "type": "Action.OpenUrl",
+      "title": "Translate Document",
+      "url": "https://adaptivecards.io",
+      "style": "positive"
+    }
+  ],
+  "body": [
+    {
+      "type": "Image",
+      "altText": "Omni Translator Bot",
+      "url": "https://ciklopea.com/wp-content/uploads/2017/07/translator.jpg"
+    },
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Omni Translator Bot ",
+          "weight": "Bolder",
+          "size": "Large"
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Hello! I can help you with most of your translation needs. I can translate texts and documents in 60 different languages. Select your option. ",
+          "wrap": true,
+          "size": "Medium"
+        }
+      ]
+    }
+  ],
+  "type": "AdaptiveCard",
+  "version": "1.2"
+}

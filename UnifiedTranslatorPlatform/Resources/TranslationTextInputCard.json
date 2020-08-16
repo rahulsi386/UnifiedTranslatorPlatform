@@ -1,0 +1,73 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Enter Text to Translate:",
+          "weight": "Bolder",
+          "size": "Medium"
+        },
+        {
+          "type": "Input.Text",
+          "placeholder": "enter text",
+          "separator": true,
+          "isMultiline": true,
+          "id": "TextInput"
+        },
+        {
+          "type": "TextBlock",
+          "text": "Select Target Language/s:",
+          "weight": "Bolder",
+          "size": "Medium"
+        },
+        {
+          "type": "Input.ChoiceSet",
+          "choices": [
+            {
+              "title": "Spanish",
+              "value": "Spanish"
+            },
+            {
+              "title": "French",
+              "value": "French"
+            },
+            {
+              "title": "German",
+              "value": "German"
+            },
+            {
+              "title": "Italian",
+              "value": "Italian"
+            },
+            {
+              "title": "Dutch",
+              "value": "Dutch"
+            },
+            {
+              "title": "Polish",
+              "value": "Polish"
+            }
+          ],
+          "placeholder": "Placeholder text",
+          "value": "Spanish",
+          "id": "TargetLang",
+          "isMultiSelect": true
+        }
+      ]
+    },
+    {
+      "type": "ActionSet",
+      "actions": [
+        {
+          "type": "Action.Submit",
+          "title": "Translate"
+        }
+      ]
+    }
+  ],
+  "type": "AdaptiveCard",
+  "version": "1.2"
+}
