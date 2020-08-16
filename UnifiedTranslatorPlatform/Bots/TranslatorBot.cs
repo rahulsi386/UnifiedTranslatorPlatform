@@ -22,7 +22,7 @@ namespace UnifiedTranslatorPlatform.Bots
     {
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-           
+
             if (!string.IsNullOrEmpty(turnContext.Activity.Text))
             {
                 switch (turnContext.Activity.Text.Trim().ToLowerInvariant())
@@ -30,7 +30,7 @@ namespace UnifiedTranslatorPlatform.Bots
                     case "translate text":
                         await turnContext.SendActivityAsync(MessageFactory.Attachment(TranslationTextInputCardAttachment()));
                         break;
-                    case "translate document":                      
+                    case "translate document":
                         await turnContext.SendActivityAsync(MessageFactory.Text("Hello! Brother"), cancellationToken);
                         break;
                     default:
@@ -42,8 +42,11 @@ namespace UnifiedTranslatorPlatform.Bots
             {
 
                 TranslationInput inputData = JsonConvert.DeserializeObject<TranslationInput>(turnContext.Activity.Value.ToString());
-                var response=await TranslationFunction.InvokeTranslationFunction(inputData.TextInput, inputData.TargetLang);
-                await turnContext.SendActivityAsync(MessageFactory.Attachment(TranslationResultCardAttachment()));
+                var targetLang=inputData.TargetLang.Replace(',', '&');
+                var response = await TranslationFunction.InvokeTranslationFunction(inputData.TextInput, targetLang);
+                //await turnContext.SendActivityAsync(MessageFactory.Text(inputData.TargetLang));
+                //await turnContext.SendActivityAsync(MessageFactory.Attachment(TranslationResultCardAttachment()));
+
             }
             //else if (turnContext.Activity.Attachments.Count>0)
             //{
@@ -54,7 +57,7 @@ namespace UnifiedTranslatorPlatform.Bots
         }
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
-        {         
+        {
             Attachment welcomeCard = WelcomeHeroCard();
             foreach (var member in membersAdded)
             {
@@ -96,9 +99,9 @@ namespace UnifiedTranslatorPlatform.Bots
                     new CardAction(ActionTypes.ImBack, title: "Translate Text", value: "Translate Text"),
                     new CardAction(ActionTypes.PostBack, title: "Translate Document", value: "Translate Document")
                 },
-                
+
             };
-          
+
             return welcomeCard.ToAttachment();
         }
 
@@ -115,7 +118,7 @@ namespace UnifiedTranslatorPlatform.Bots
             return textInputCardAttachment;
         }
 
-        private static Attachment TranslationResultCardAttachment()
+        private static Attachment TranslationResultCardAttachment(string? srcText, string detectedLang, string targetLang, string translatedText, string? srcTextLen, string? translatedTextLen, string? confidenceScore)
         {
             var paths = new[] { ".", "Resources", "TranslationResultCard.json" };
             var jsonString = File.ReadAllText(Path.Combine(paths));
@@ -123,19 +126,27 @@ namespace UnifiedTranslatorPlatform.Bots
             //Below lines of code read the json file and modify its content then present it to the user as a card
             JArray body = (JArray)cardJson["body"];
             JArray facts = (JArray)(body[1]["facts"]);
-            ((JObject)facts[0])["value"] = "Modified using C# code";
-            ((JObject)facts[1])["value"] = "Modified using C# code";
-            ((JObject)facts[2])["value"] = "Modified using C# code";
-            ((JObject)facts[3])["value"] = "Modified using C# code";
-            ((JObject)facts[4])["value"] = "Modified using C# code";
-            ((JObject)facts[5])["value"] = "Modified using C# code";
-            ((JObject)facts[6])["value"] = "Modified using C# code";
+            ((JObject)facts[0])["value"] = srcText;
+            ((JObject)facts[1])["value"] = detectedLang;
+            ((JObject)facts[2])["value"] = targetLang;
+            ((JObject)facts[3])["value"] = translatedText;
+            ((JObject)facts[4])["value"] = srcTextLen;
+            ((JObject)facts[5])["value"] = translatedTextLen;
+            ((JObject)facts[6])["value"] = confidenceScore;
             var translationResultCard = new Attachment()
             {
                 ContentType = "application/vnd.microsoft.card.adaptive",
                 Content = JsonConvert.DeserializeObject(cardJson.ToString()),
             };
             return translationResultCard;
+        }
+
+
+        public class Rootobject
+        {
+            public string targetLang { get; set; }
+            public string translatedText { get; set; }
+
         }
     }
 }
