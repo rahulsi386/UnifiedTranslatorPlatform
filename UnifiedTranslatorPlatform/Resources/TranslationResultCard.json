@@ -14,7 +14,9 @@
                 {
                   "type": "TextBlock",
                   "text": "Language:",
-                  "id": "targetLangLbl"
+                  "id": "targetLangLbl",
+                  "weight": "Bolder",
+                  "wrap": true
                 }
               ]
             },
@@ -25,7 +27,8 @@
                 {
                   "type": "TextBlock",
                   "text": "lang",
-                  "id": "targetLang"
+                  "id": "targetLang",
+                  "wrap": true
                 }
               ]
             }
@@ -41,10 +44,11 @@
           "type": "TextBlock",
           "text": "translated text",
           "id": "translatedText",
-          "color": "Good",
           "size": "Medium",
           "wrap": true,
-          "height": "stretch"
+          "height": "stretch",
+          "color": "Warning",
+          "isSubtle": true
         }
       ],
       "id": "translatedTextContainer"
@@ -62,7 +66,8 @@
                 {
                   "type": "TextBlock",
                   "text": "Confidence Score:",
-                  "id": "confidenceScoreLbl"
+                  "id": "confidenceScoreLbl",
+                  "weight": "Bolder"
                 }
               ]
             },
