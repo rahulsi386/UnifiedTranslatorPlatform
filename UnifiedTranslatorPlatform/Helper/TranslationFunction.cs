@@ -56,5 +56,6 @@ namespace UnifiedTranslatorPlatform.Helper
     {
         public string toLang { get; set; }
         public string translatedText { get; set; }
+        public string confidenceScore { get; set; }
     }
 }

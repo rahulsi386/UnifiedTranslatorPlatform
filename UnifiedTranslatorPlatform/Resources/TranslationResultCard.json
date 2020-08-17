@@ -5,46 +5,81 @@
       "type": "Container",
       "items": [
         {
-          "type": "TextBlock",
-          "text": "Translation Result:",
-          "weight": "Bolder",
-          "size": "Medium"
-        }
-      ]
-    },
-    {
-      "type": "FactSet",
-      "facts": [
-        {
-          "title": "Source Text:",
-          "value": "When bot is hosted in Azure Bot service, the Bot Framework Emulator might not be able to use the information from bot configuration to connect and get the bot’s registration and OAuth connection settings values d; hence, a tunneling software like ngrok is used to ensure that the token returned by Azure Bot Service is returned to Bot Framework Emulator."
-        },
-        {
-          "title": "Detected Language:",
-          "value": "English"
-        },
-        {
-          "title": "Target Languages:",
-          "value": "Spanish"
-        },
-        {
-          "title": "Translated Text:",
-          "value": "Cuando el bot está alojado en el servicio Azure Bot, es posible que el emulador del marco del bot no pueda utilizar la información de la configuración del bot para conectarse y obtener los valores d del registro del bot y de la configuración de la conexión OAuth; por lo tanto, se utiliza un software de tunelización como ngrok para garantizar que el token devuelto por el servicio Azure Bot se devuelva al emulador del marco del bot."
-        },
-        {
-          "title": "Source Text Length:",
-          "value": "200"
-        },
-        {
-          "title": "Translated Text Length:",
-          "value": "300"
-        },
-        {
-          "title": "Confidence Score:",
-          "value": "96%"
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Language:",
+                  "id": "targetLangLbl"
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "lang",
+                  "id": "targetLang"
+                }
+              ]
+            }
+          ]
         }
       ],
-      "height": "automatic"
+      "id": "targetLangContainer"
+    },
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "translated text",
+          "id": "translatedText",
+          "color": "Good",
+          "size": "Medium"
+        }
+      ],
+      "id": "translatedTextContainer"
+    },
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Confidence Score:",
+                  "id": "confidenceScoreLbl"
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "1.0",
+                  "id": "confidenceScore"
+                }
+              ]
+            }
+          ],
+          "id": "TranslationProps"
+        }
+      ],
+      "id": "translationPropContainer"
     }
   ],
   "type": "AdaptiveCard",

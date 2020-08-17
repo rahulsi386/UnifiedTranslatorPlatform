@@ -47,7 +47,7 @@ namespace UnifiedTranslatorPlatform.Bots
                 TranslationOutput[] translationOutput = JsonConvert.DeserializeObject<TranslationOutput[]>(response);
                 foreach(var o in translationOutput)
                 {
-                    responseCarousel.Add(TranslationResultCardAttachment(o.toLang, o.translatedText));
+                    responseCarousel.Add(TranslationResultCardAttachment(o.toLang, o.translatedText,o.confidenceScore));
                 }
                 
                 await turnContext.SendActivityAsync(MessageFactory.Carousel(responseCarousel));
@@ -124,21 +124,22 @@ namespace UnifiedTranslatorPlatform.Bots
             return textInputCardAttachment;
         }
 
-        private static Attachment TranslationResultCardAttachment(string targetLang, string translatedText)
+        private static Attachment TranslationResultCardAttachment(string targetLang, string translatedText, string confidenceScore)
         {
             var paths = new[] { ".", "Resources", "TranslationResultCard.json" };
             var jsonString = File.ReadAllText(Path.Combine(paths));
             var cardJson = JObject.Parse(jsonString);
             //Below lines of code read the json file and modify its content then present it to the user as a card
             JArray body = (JArray)cardJson["body"];
-            JArray facts = (JArray)(body[1]["facts"]);
-            //((JObject)facts[0])["value"] = srcText;
-            //((JObject)facts[1])["value"] = detectedLang;
-            ((JObject)facts[2])["value"] = targetLang;
-            ((JObject)facts[3])["value"] = translatedText;
-            //((JObject)facts[4])["value"] = srcTextLen;
-            //((JObject)facts[5])["value"] = translatedTextLen;
-            //((JObject)facts[6])["value"] = confidenceScore;
+            JArray targetLangContainer = (JArray)(body[0]["items"][0]["columns"][1]["items"]);
+            ((JObject)targetLangContainer[0])["text"] = targetLang;
+
+            JArray translatedTextContainer = (JArray)(body[1]["items"]);
+            ((JObject)translatedTextContainer[0])["text"] = translatedText;
+
+            JArray translationPropContainer = (JArray)(body[2]["items"][0]["columns"][1]["items"]);
+            ((JObject)translationPropContainer[0])["text"] = confidenceScore;
+
             var translationResultCard = new Attachment()
             {
                 ContentType = "application/vnd.microsoft.card.adaptive",
@@ -146,13 +147,7 @@ namespace UnifiedTranslatorPlatform.Bots
             };
             return translationResultCard;
         }
-
-
-        public class Rootobject
-        {
-            public string targetLang { get; set; }
-            public string translatedText { get; set; }
-
-        }
+       
     }
+
 }
