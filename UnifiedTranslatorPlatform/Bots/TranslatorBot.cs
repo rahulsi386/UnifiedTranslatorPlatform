@@ -40,11 +40,17 @@ namespace UnifiedTranslatorPlatform.Bots
             }
             else if (!string.IsNullOrEmpty(turnContext.Activity.Value.ToString()))
             {
-
+                IList<Attachment> responseCarousel = new List<Attachment>();
                 TranslationInput inputData = JsonConvert.DeserializeObject<TranslationInput>(turnContext.Activity.Value.ToString());
                 var targetLang = inputData.TargetLang.Replace(",", "&to=");
                 var response = await TranslationFunction.InvokeTranslationFunction(inputData.TextInput, targetLang);
-                await turnContext.SendActivityAsync(MessageFactory.Text(response));
+                TranslationOutput[] translationOutput = JsonConvert.DeserializeObject<TranslationOutput[]>(response);
+                foreach(var o in translationOutput)
+                {
+                    responseCarousel.Add(TranslationResultCardAttachment(o.toLang, o.translatedText));
+                }
+                
+                await turnContext.SendActivityAsync(MessageFactory.Carousel(responseCarousel));
                 //await turnContext.SendActivityAsync(MessageFactory.Attachment(TranslationResultCardAttachment()));
 
             }
@@ -118,7 +124,7 @@ namespace UnifiedTranslatorPlatform.Bots
             return textInputCardAttachment;
         }
 
-        private static Attachment TranslationResultCardAttachment(string? srcText, string detectedLang, string targetLang, string translatedText, string? srcTextLen, string? translatedTextLen, string? confidenceScore)
+        private static Attachment TranslationResultCardAttachment(string targetLang, string translatedText)
         {
             var paths = new[] { ".", "Resources", "TranslationResultCard.json" };
             var jsonString = File.ReadAllText(Path.Combine(paths));
@@ -126,13 +132,13 @@ namespace UnifiedTranslatorPlatform.Bots
             //Below lines of code read the json file and modify its content then present it to the user as a card
             JArray body = (JArray)cardJson["body"];
             JArray facts = (JArray)(body[1]["facts"]);
-            ((JObject)facts[0])["value"] = srcText;
-            ((JObject)facts[1])["value"] = detectedLang;
+            //((JObject)facts[0])["value"] = srcText;
+            //((JObject)facts[1])["value"] = detectedLang;
             ((JObject)facts[2])["value"] = targetLang;
             ((JObject)facts[3])["value"] = translatedText;
-            ((JObject)facts[4])["value"] = srcTextLen;
-            ((JObject)facts[5])["value"] = translatedTextLen;
-            ((JObject)facts[6])["value"] = confidenceScore;
+            //((JObject)facts[4])["value"] = srcTextLen;
+            //((JObject)facts[5])["value"] = translatedTextLen;
+            //((JObject)facts[6])["value"] = confidenceScore;
             var translationResultCard = new Attachment()
             {
                 ContentType = "application/vnd.microsoft.card.adaptive",
