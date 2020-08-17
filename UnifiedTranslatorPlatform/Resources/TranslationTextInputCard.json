@@ -28,27 +28,27 @@
           "choices": [
             {
               "title": "Spanish",
-              "value": "Spanish"
+              "value": "es"
             },
             {
               "title": "French",
-              "value": "French"
+              "value": "fr"
             },
             {
               "title": "German",
-              "value": "German"
+              "value": "de"
             },
             {
               "title": "Italian",
-              "value": "Italian"
+              "value": "it"
             },
             {
               "title": "Dutch",
-              "value": "Dutch"
+              "value": "nl"
             },
             {
               "title": "Polish",
-              "value": "Polish"
+              "value": "pl"
             }
           ],
           "placeholder": "Placeholder text",

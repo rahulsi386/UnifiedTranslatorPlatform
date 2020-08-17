@@ -42,9 +42,9 @@ namespace UnifiedTranslatorPlatform.Bots
             {
 
                 TranslationInput inputData = JsonConvert.DeserializeObject<TranslationInput>(turnContext.Activity.Value.ToString());
-                var targetLang=inputData.TargetLang.Replace(',', '&');
+                var targetLang = inputData.TargetLang.Replace(",", "&to=");
                 var response = await TranslationFunction.InvokeTranslationFunction(inputData.TextInput, targetLang);
-                //await turnContext.SendActivityAsync(MessageFactory.Text(inputData.TargetLang));
+                //await turnContext.SendActivityAsync(MessageFactory.Text(targetLang));
                 //await turnContext.SendActivityAsync(MessageFactory.Attachment(TranslationResultCardAttachment()));
 
             }
