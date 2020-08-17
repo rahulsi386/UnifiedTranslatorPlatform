@@ -16,7 +16,13 @@
           "separator": true,
           "isMultiline": true,
           "id": "TextInput"
-        },
+        }
+      ],
+      "id": "textInputContainer"
+    },
+    {
+      "type": "Container",
+      "items": [
         {
           "type": "TextBlock",
           "text": "Select Target Language/s:",
@@ -24,46 +30,172 @@
           "size": "Medium"
         },
         {
-          "type": "Input.ChoiceSet",
-          "choices": [
+          "type": "ColumnSet",
+          "columns": [
             {
-              "title": "Spanish",
-              "value": "es"
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "Input.ChoiceSet",
+                  "choices": [
+                    {
+                      "title": "Afrikaans",
+                      "value": "af"
+                    },
+                    {
+                      "title": "Arabic",
+                      "value": "ar"
+                    },
+                    {
+                      "title": "Bangla",
+                      "value": "bn"
+                    },
+                    {
+                      "title": "Czech",
+                      "value": "cs"
+                    },
+                    {
+                      "title": "Danish",
+                      "value": "da"
+                    },
+                    {
+                      "title": "German",
+                      "value": "de"
+                    },
+                    {
+                      "title": "English",
+                      "value": "en"
+                    },
+                    {
+                      "title": "Spanish",
+                      "value": "es"
+                    },
+                    {
+                      "title": "French",
+                      "value": "fr"
+                    },
+                    {
+                      "title": "Irish",
+                      "value": "ga"
+                    },
+                    {
+                      "title": "Hindi",
+                      "value": "hi"
+                    },
+                    {
+                      "title": "Indonesian",
+                      "value": "id"
+                    },
+                    {
+                      "title": "Italian",
+                      "value": "it"
+                    },
+                    {
+                      "title": "Japanese",
+                      "value": "ja"
+                    },
+                    {
+                      "title": "Kannada",
+                      "value": "kn"
+                    }
+                  ],
+                  "placeholder": "Placeholder tex",
+                  "value": "Spanish",
+                  "id": "TargetLang1",
+                  "isMultiSelect": true,
+                  "wrap": true,
+                  "separator": true
+                }
+              ]
             },
             {
-              "title": "French",
-              "value": "fr"
-            },
-            {
-              "title": "German",
-              "value": "de"
-            },
-            {
-              "title": "Italian",
-              "value": "it"
-            },
-            {
-              "title": "Dutch",
-              "value": "nl"
-            },
-            {
-              "title": "Polish",
-              "value": "pl"
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "Input.ChoiceSet",
+                  "choices": [
+                    {
+                      "title": "Korean",
+                      "value": "ko"
+                    },
+                    {
+                      "title": "Dutch",
+                      "value": "nl"
+                    },
+                    {
+                      "title": "Polish",
+                      "value": "pl"
+                    },
+                    {
+                      "title": "Portuguese (Brazil)",
+                      "value": "pt"
+                    },
+                    {
+                      "title": "Portuguese (Portugal)",
+                      "value": "pt-pt"
+                    },
+                    {
+                      "title": "Romanian",
+                      "value": "ro"
+                    },
+                    {
+                      "title": "Russian",
+                      "value": "ru"
+                    },
+                    {
+                      "title": "Swedish",
+                      "value": "sv"
+                    },
+                    {
+                      "title": "Thai",
+                      "value": "th"
+                    },
+                    {
+                      "title": "Turkish",
+                      "value": "tr"
+                    },
+                    {
+                      "title": "Ukrainian",
+                      "value": "uk"
+                    },
+                    {
+                      "title": "Urdu",
+                      "value": "ur"
+                    },
+                    {
+                      "title": "Vietnamese",
+                      "value": "vi"
+                    },
+                    {
+                      "title": "Chinese Simplified",
+                      "value": "zh-Hans"
+                    },
+                    {
+                      "title": "Chinese Traditional",
+                      "value": "zh-Hant"
+                    }
+                  ],
+                  "placeholder": "Placeholder tex",
+                  "id": "TargetLang2",
+                  "isMultiSelect": true,
+                  "style": "expanded"
+                }
+              ]
             }
-          ],
-          "placeholder": "Placeholder text",
-          "value": "Spanish",
-          "id": "TargetLang",
-          "isMultiSelect": true
+          ]
         }
-      ]
+      ],
+      "id": "languageContainer"
     },
     {
       "type": "ActionSet",
       "actions": [
         {
           "type": "Action.Submit",
-          "title": "Translate"
+          "title": "Translate",
+          "id": "translateButton"
         }
       ]
     }

@@ -41,25 +41,28 @@ namespace UnifiedTranslatorPlatform.Bots
             else if (!string.IsNullOrEmpty(turnContext.Activity.Value.ToString()))
             {
                 IList<Attachment> responseCarousel = new List<Attachment>();
-                TranslationInput inputData = JsonConvert.DeserializeObject<TranslationInput>(turnContext.Activity.Value.ToString());
-                var targetLang = inputData.TargetLang.Replace(",", "&to=");
-                var response = await TranslationFunction.InvokeTranslationFunction(inputData.TextInput, targetLang);
-                TranslationOutput[] translationOutput = JsonConvert.DeserializeObject<TranslationOutput[]>(response);
-                foreach(var o in translationOutput)
+                //TranslationInput inputData = JsonConvert.DeserializeObject<TranslationInput>(turnContext.Activity.Value.ToString());
+
+                var targetLang = string.Empty;
+                var textInput = string.Empty;
+                var userInput = JObject.Parse(turnContext.Activity.Value.ToString());
+                var userInputProperties = userInput.Properties();
+                foreach (var property in userInputProperties)
                 {
-                    responseCarousel.Add(TranslationResultCardAttachment(o.toLang, o.translatedText,o.confidenceScore));
+                    if (property.Name.ToString() == "TextInput")
+                        textInput = property.Value.ToString();                   
+                    else
+                        targetLang += $",{property.Value.ToString()}";
                 }
-                
+                targetLang = targetLang.Replace(",", "&to=");
+                var response = await TranslationFunction.InvokeTranslationFunction(textInput, targetLang);
+                TranslationOutput[] translationOutput = JsonConvert.DeserializeObject<TranslationOutput[]>(response);
+                foreach (var o in translationOutput)
+                {
+                    responseCarousel.Add(TranslationResultCardAttachment(o.toLang, o.translatedText, o.confidenceScore));
+                }
                 await turnContext.SendActivityAsync(MessageFactory.Carousel(responseCarousel));
-                //await turnContext.SendActivityAsync(MessageFactory.Attachment(TranslationResultCardAttachment()));
-
             }
-            //else if (turnContext.Activity.Attachments.Count>0)
-            //{
-            //    await turnContext.SendActivityAsync(MessageFactory.Text(turnContext.Activity.Attachments.FirstOrDefault().ContentUrl), cancellationToken);
-            //    await turnContext.SendActivityAsync(MessageFactory.Text(turnContext.Activity.Attachments.FirstOrDefault().Content.ToString()));
-            //}
-
         }
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
