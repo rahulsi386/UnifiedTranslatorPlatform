@@ -42,7 +42,9 @@
           "text": "translated text",
           "id": "translatedText",
           "color": "Good",
-          "size": "Medium"
+          "size": "Medium",
+          "wrap": true,
+          "height": "stretch"
         }
       ],
       "id": "translatedTextContainer"
