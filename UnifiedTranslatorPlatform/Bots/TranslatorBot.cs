@@ -52,7 +52,7 @@ namespace UnifiedTranslatorPlatform.Bots
                     if (property.Name.ToString() == "TextInput")
                         textInput = property.Value.ToString();                   
                     else
-                        targetLang += $",{property.Value.ToString()}";
+                        targetLang += $",{property.Value}.ToString()";
                 }
                 targetLang = targetLang.Replace(",", "&to=");
                 var response = await TranslationFunction.InvokeTranslationFunction(textInput, targetLang);
