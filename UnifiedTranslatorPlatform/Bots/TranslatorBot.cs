@@ -52,9 +52,9 @@ namespace UnifiedTranslatorPlatform.Bots
                     if (property.Name.ToString() == "TextInput")
                         textInput = property.Value.ToString();                   
                     else
-                        targetLang += $",{property.Value}.ToString()";
+                        targetLang += $",{property.Value}";
                 }
-                targetLang = targetLang.Replace(",", "&to=");
+                targetLang = targetLang.Replace(",", "&to=");               
                 var response = await TranslationFunction.InvokeTranslationFunction(textInput, targetLang);
                 TranslationOutput[] translationOutput = JsonConvert.DeserializeObject<TranslationOutput[]>(response);
                 foreach (var o in translationOutput)

@@ -14,6 +14,12 @@ namespace UnifiedTranslatorPlatform.Helper
         private const string _functionKey = "FUNCTION_API_KEY";
         private static readonly string functionApiKey = Environment.GetEnvironmentVariable(_functionKey);
 
+        //Below four lines of code is only for testing during development
+        //private const string _functionUrl = "https://azureoefunctionapp.azurewebsites.net/api/Translator";
+        //private static readonly string functionEndpoint = _functionUrl;
+        //private const string _functionKey = "b71HBssqaPnBsBNJtRdiN8KG1st7pfVoh9ZhBFQE3qbjKTDdjSKJOw==";
+        //private static readonly string functionApiKey = _functionKey;
+
         public static async Task<string> InvokeTranslationFunction(string textInput, string targetLang)
         {             
             var translationInput = new TranslationInput
